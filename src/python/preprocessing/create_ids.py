@@ -44,7 +44,6 @@ def get_datalist_df(images_paths):
     return data_df
 
 
-
 def parse_args():
     parser = argparse.ArgumentParser()
 

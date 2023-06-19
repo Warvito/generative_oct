@@ -19,9 +19,7 @@ def get_test_dataloader(
             transforms.EnsureChannelFirstd(keys=["image"]),
             transforms.Lambdad(
                 keys=["image"],
-                func=lambda x: x[0, :, :][
-                    None,
-                ],
+                func=lambda x: x[0, :, :][None],
             ),
             transforms.Rotate90d(keys=["image"], k=-1, spatial_axes=(0, 1)),  # Fix flipped image read
             transforms.Flipd(keys=["image"], spatial_axis=1),  # Fix flipped image read

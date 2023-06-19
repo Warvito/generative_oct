@@ -73,17 +73,17 @@ def get_dataloader(
                 transforms.ScaleIntensityRanged(
                     keys=["image"], a_min=0.0, a_max=255.0, b_min=0.0, b_max=1.0, clip=True
                 ),
-                transforms.CenterSpatialCropd(keys=["image"], roi_size=(640, 512)),
-                transforms.SpatialPadd(keys=["image"], spatial_size=(640, 512)),
+                transforms.SpatialPadd(keys=["image"], spatial_size=(512, 512)),
+                transforms.RandSpatialCropd(keys=["image"], roi_size=(512, 512), random_size=False),
                 transforms.RandAffined(
                     keys=["image"],
                     rotate_range=(-np.pi / 18, np.pi / 18),
                     translate_range=(-10, 10),
                     scale_range=(-0.05, 0.05),
-                    spatial_size=[640, 512],
+                    spatial_size=[512, 512],
                     prob=0.5,
                 ),
-                transforms.RandFlipd(keys=["image"], spatial_axis=1, prob=0.25),
+                transforms.RandFlipd(keys=["image"], spatial_axis=1, prob=0.5),
                 transforms.RandShiftIntensityd(keys=["image"], offsets=0.05, prob=0.1),
                 transforms.RandAdjustContrastd(keys=["image"], gamma=(0.95, 1.05), prob=0.1),
                 transforms.ThresholdIntensityd(keys=["image"], threshold=1, above=False, cval=1.0),
@@ -102,8 +102,9 @@ def get_dataloader(
                 transforms.ScaleIntensityRanged(
                     keys=["image"], a_min=0.0, a_max=255.0, b_min=0.0, b_max=1.0, clip=True
                 ),
-                transforms.CenterSpatialCropd(keys=["image"], roi_size=(640, 512)),
-                transforms.SpatialPadd(keys=["image"], spatial_size=(640, 512)),
+                transforms.SpatialPadd(keys=["image"], spatial_size=(512, 512)),
+                transforms.RandSpatialCropd(keys=["image"], roi_size=(512, 512), random_size=False),
+                transforms.RandFlipd(keys=["image"], spatial_axis=1, prob=0.5),
                 transforms.ToTensord(keys=["image"]),
                 ApplyTokenizerd(keys=["report"]),
                 transforms.RandLambdad(

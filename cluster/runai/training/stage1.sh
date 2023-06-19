@@ -1,8 +1,8 @@
 seed=42
-run_dir="aekl_v1"
+run_dir="aekl_v0"
 training_ids="/project/outputs/ids/train.tsv"
 validation_ids="/project/outputs/ids/validation.tsv"
-config_file="/project/configs/stage1/aekl_v1.yaml"
+config_file="/project/configs/stage1/aekl_v0.yaml"
 batch_size=16
 n_epochs=750
 adv_start=50
@@ -11,8 +11,8 @@ num_workers=128
 experiment="AEKL"
 
 runai submit \
-  --name mammo-aekl-v1 \
-  --image aicregistry:5000/wds20:ldm_mammography \
+  --name oct-aekl-v0 \
+  --image aicregistry:5000/wds20:ldm_oct \
   --backoff-limit 0 \
   --gpu 4 \
   --cpu 96 \
@@ -21,8 +21,8 @@ runai submit \
   --node-type "A100" \
   --host-ipc \
   --project wds20 \
-  --volume /nfs/home/wds20/projects/generative_mammography/:/project/ \
-  --volume /nfs/home/wds20/datasets/CSAW/sourcedata/:/data/ \
+  --volume /nfs/home/wds20/projects/generative_oct/:/project/ \
+  --volume /nfs/home/wds20/datasets/KAGGLE_OCT/OCT2017:/data/ \
   --command -- bash /project/src/bash/start_script.sh \
     python3 /project/src/python/training/train_aekl.py \
       seed=${seed} \

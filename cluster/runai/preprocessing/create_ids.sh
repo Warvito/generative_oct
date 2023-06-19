@@ -1,9 +1,8 @@
-metadata_path="/sourcedata/labels/CSAW-M_train.csv"
 output_dir="/project/outputs/ids/"
 
 runai submit \
-  --name create-ids-mammo \
-  --image aicregistry:5000/wds20:ldm_mammography \
+  --name oct-create-ids \
+  --image aicregistry:5000/wds20:ldm_oct \
   --backoff-limit 0 \
   --gpu 0 \
   --cpu 4 \
@@ -11,8 +10,7 @@ runai submit \
   --run-as-user \
   --host-ipc \
   --project wds20 \
-  --volume /nfs/home/wds20/datasets/CSAW/sourcedata/:/sourcedata/ \
-  --volume /nfs/home/wds20/projects/generative_mammography/:/project/ \
+  --volume /nfs/home/wds20/projects/generative_oct/:/project/ \
+  --volume /nfs/home/wds20/datasets/KAGGLE_OCT/OCT2017:/data/ \
   --command -- python /project/src/python/preprocessing/create_ids.py \
-    --metadata_path=${metadata_path} \
     --output_dir=${output_dir}

@@ -3,8 +3,8 @@ diffusion_mlflow_path="/project/mlruns/423684214116739438/9528560acc084fd49a0e09
 output_dir="/project/outputs/trained_models/"
 
 runai submit \
-  --name mammo-convert-model \
-  --image aicregistry:5000/wds20:ldm_mammography \
+  --name oct-convert-model \
+  --image aicregistry:5000/wds20:ldm_oct \
   --backoff-limit 0 \
   --gpu 1 \
   --cpu 4 \
@@ -12,7 +12,7 @@ runai submit \
   --run-as-user \
   --host-ipc \
   --project wds20 \
-  --volume /nfs/home/wds20/projects/generative_mammography/:/project/ \
+  --volume /nfs/home/wds20/projects/generative_oct/:/project/ \
   --command -- bash /project/src/bash/start_script.sh \
     python3 /project/src/python/testing/convert_mlflow_to_pytorch.py \
       stage1_mlflow_path=${stage1_mlflow_path} \

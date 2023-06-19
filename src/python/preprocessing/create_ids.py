@@ -1,14 +1,53 @@
-""" Script to create train, validation and test data lists with paths to images and radiological reports. """
 import argparse
 from pathlib import Path
 
 import pandas as pd
 
 
+def get_datalist_df(images_paths):
+    datalist = []
+    for image_path in images_paths:
+        if image_path.parent.stem == "CNV":
+            datalist.append(
+                {
+                    "image": str(image_path),
+                    "report": "Choroidal Neovascularization",
+                }
+            )
+        elif image_path.parent.stem == "DME":
+            datalist.append(
+                {
+                    "image": str(image_path),
+                    "report": "Diabetic Macular Edema",
+                }
+            )
+        elif image_path.parent.stem == "DRUSEN":
+            datalist.append(
+                {
+                    "image": str(image_path),
+                    "report": "Drusen",
+                }
+            )
+        elif image_path.parent.stem == "NORMAL":
+            datalist.append(
+                {
+                    "image": str(image_path),
+                    "report": "Normal retina",
+                }
+            )
+        else:
+            print(f"Unknown class: {image_path.parent.stem}")
+
+    data_df = pd.DataFrame(datalist)
+    data_df = data_df.sample(frac=1, random_state=42).reset_index(drop=True)
+
+    return data_df
+
+
+
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--metadata_path", help="Path to CSAW-M_train.csv file.")
     parser.add_argument("--output_dir", help="Path to directory to save files with paths.")
 
     args = parser.parse_args()
@@ -16,35 +55,19 @@ def parse_args():
 
 
 def main(args):
-    metadata_df = pd.read_csv(args.metadata_path, sep=";", na_values="-")
+    train_data_dir = Path("/data/train")
+    train_datalist_df = get_datalist_df(list(train_data_dir.glob("**/*.jpeg")))
 
-    data_list = []
-    for index, row in metadata_df.iterrows():
+    val_data_dir = Path("/data/val")
+    val_datalist_df = get_datalist_df(list(val_data_dir.glob("**/*.jpeg")))
 
-        if int(row["Label"]) <= 2:
-            sentence = "Low masking level"
-        elif int(row["Label"]) <= 6:
-            sentence = "Medium masking level"
-        else:
-            sentence = "High masking level"
+    test_data_dir = Path("/data/test")
+    test_datalist_df = get_datalist_df(list(test_data_dir.glob("**/*.jpeg")))
 
-        data_list.append(
-            {
-                "image": f"/data/images/preprocessed/train/{row['Filename']}",
-                "report": sentence,
-            }
-        )
-
-    data_df = pd.DataFrame(data_list)
-    data_df = data_df.sample(frac=1, random_state=42).reset_index(drop=True)
-
-    train_data_list = data_df[:9000]
-    val_data_list = data_df[9000:]
-
-    # save the data lists
     output_dir = Path(args.output_dir)
-    train_data_list.to_csv(output_dir / "train.tsv", index=False, sep="\t")
-    val_data_list.to_csv(output_dir / "validation.tsv", index=False, sep="\t")
+    train_datalist_df.to_csv(output_dir / "train.tsv", index=False, sep="\t")
+    val_datalist_df.to_csv(output_dir / "validation.tsv", index=False, sep="\t")
+    test_datalist_df.to_csv(output_dir / "test.tsv", index=False, sep="\t")
 
 
 if __name__ == "__main__":

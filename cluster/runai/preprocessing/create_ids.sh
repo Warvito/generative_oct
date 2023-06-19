@@ -13,5 +13,5 @@ runai submit \
   --volume /nfs/home/wds20/projects/generative_oct/:/project/ \
   --volume /nfs/home/wds20/datasets/KAGGLE_OCT/OCT2017:/data/ \
   --command -- bash /project/src/bash/start_script.sh \
-      python3 /project/src/python/training/create_ids.py \
+      python3 /project/src/python/preprocessing/create_ids.py \
           output_dir=${output_dir}

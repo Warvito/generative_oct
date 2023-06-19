@@ -64,6 +64,7 @@ def main(args):
     test_datalist_df = get_datalist_df(list(test_data_dir.glob("**/*.jpeg")))
 
     output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
     train_datalist_df.to_csv(output_dir / "train.tsv", index=False, sep="\t")
     val_datalist_df.to_csv(output_dir / "validation.tsv", index=False, sep="\t")
     test_datalist_df.to_csv(output_dir / "test.tsv", index=False, sep="\t")

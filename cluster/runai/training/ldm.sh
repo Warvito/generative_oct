@@ -2,13 +2,13 @@ seed=2
 run_dir="aekl_v0_ldm_v0"
 training_ids="/project/outputs/ids/train.tsv"
 validation_ids="/project/outputs/ids/validation.tsv"
-stage1_uri="/project/mlruns/528206275705240271/0453cddba39645df82bc7780541e6039/artifacts/final_model"
+stage1_uri="/project/mlruns/721721503681535766/2a05fc762c734a8f9914cfe46968250e/artifacts/final_model"
 config_file="/project/configs/ldm/ldm_v0.yaml"
 scale_factor=0.3
 batch_size=48
-n_epochs=1000
+n_epochs=300
 eval_freq=10
-num_workers=64
+num_workers=128
 experiment="LDM"
 
 runai submit \
@@ -16,7 +16,7 @@ runai submit \
   --image aicregistry:5000/wds20:ldm_oct \
   --backoff-limit 0 \
   --gpu 4 \
-  --cpu 32 \
+  --cpu 128 \
   --large-shm \
   --run-as-user \
   --node-type "A100" \

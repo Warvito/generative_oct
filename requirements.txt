@@ -9,4 +9,4 @@ pre-commit
 pynvml
 spacy
 tensorboardX
-transformers[torch]
+transformers[torch]==4.29.2

@@ -4,9 +4,9 @@ training_ids="/project/outputs/ids/train.tsv"
 validation_ids="/project/outputs/ids/validation.tsv"
 config_file="/project/configs/stage1/aekl_v0.yaml"
 batch_size=16
-n_epochs=750
-adv_start=50
-eval_freq=10
+n_epochs=100
+adv_start=10
+eval_freq=1
 num_workers=128
 experiment="AEKL"
 

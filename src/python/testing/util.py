@@ -17,14 +17,11 @@ def get_test_dataloader(
         [
             transforms.LoadImaged(keys=["image"]),
             transforms.EnsureChannelFirstd(keys=["image"]),
-            transforms.Lambdad(
-                keys=["image"],
-                func=lambda x: x[0, :, :][None],
-            ),
             transforms.Rotate90d(keys=["image"], k=-1, spatial_axes=(0, 1)),  # Fix flipped image read
             transforms.Flipd(keys=["image"], spatial_axis=1),  # Fix flipped image read
             transforms.ScaleIntensityRanged(keys=["image"], a_min=0.0, a_max=255.0, b_min=0.0, b_max=1.0, clip=True),
-            transforms.CenterSpatialCropd(keys=["image"], roi_size=(512, 512)),
+            transforms.SpatialPadd(keys=["image"], spatial_size=(512, 512)),
+            transforms.RandSpatialCropd(keys=["image"], roi_size=(512, 512), random_size=False),
             transforms.ToTensord(keys=["image"]),
         ]
     )

@@ -1,6 +1,6 @@
 output_dir="/project/outputs/metrics/"
-test_ids="/project/outputs/ids/validation.tsv"
-config_file="/project/configs/stage1/aekl_v1.yaml"
+test_ids="/project/outputs/ids/test.tsv"
+config_file="/project/configs/stage1/aekl_v0.yaml"
 stage1_path="/project/outputs/trained_models/autoencoder.pth"
 seed=42
 batch_size=16

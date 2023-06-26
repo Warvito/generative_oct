@@ -57,8 +57,8 @@ def get_dataloader(
             transforms.Rotate90d(keys=["image"], k=-1, spatial_axes=(0, 1)),  # Fix flipped image read
             transforms.Flipd(keys=["image"], spatial_axis=1),  # Fix flipped image read
             transforms.ScaleIntensityRanged(keys=["image"], a_min=0.0, a_max=255.0, b_min=0.0, b_max=1.0, clip=True),
-            transforms.CenterSpatialCropd(keys=["image"], roi_size=(640, 512)),
-            transforms.SpatialPadd(keys=["image"], spatial_size=(640, 512)),
+            transforms.SpatialPadd(keys=["image"], spatial_size=(512, 512)),
+            transforms.CenterSpatialCropd(keys=["image"], roi_size=(512, 512)),
             transforms.ToTensord(keys=["image"]),
             ApplyTokenizerd(keys=["report"]),
         ]

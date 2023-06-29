@@ -1,5 +1,5 @@
 stage1_mlflow_path="/project/mlruns/721721503681535766/2a05fc762c734a8f9914cfe46968250e/artifacts/final_model"
-diffusion_mlflow_path="/project/mlruns/XXXXX/artifacts/final_model"
+diffusion_mlflow_path="/project/mlruns/907752362848865924/1b34bd92192c48af90846dc6b323f7d3/artifacts/final_model"
 output_dir="/project/outputs/trained_models/"
 
 runai submit \

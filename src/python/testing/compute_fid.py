@@ -40,7 +40,6 @@ def get_features(image, radnet):
     # Get model outputs
     with torch.no_grad():
         feature_image = radnet.forward(image)
-        # flattens the image spatially
         feature_image = spatial_average(feature_image, keepdim=False)
 
     return feature_image
@@ -88,6 +87,8 @@ def main(args):
             transforms.Rotate90d(keys=["image"], k=-1, spatial_axes=(0, 1)),  # Fix flipped image read
             transforms.Flipd(keys=["image"], spatial_axis=1),  # Fix flipped image read
             transforms.ScaleIntensityRanged(keys=["image"], a_min=0.0, a_max=255.0, b_min=0.0, b_max=1.0, clip=True),
+            transforms.SpatialPadd(keys=["image"], spatial_size=(512, 512)),
+            transforms.CenterSpatialCropd(keys=["image"], roi_size=(512, 512)),
             transforms.ToTensord(keys=["image"]),
         ]
     )
